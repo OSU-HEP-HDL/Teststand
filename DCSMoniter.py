@@ -46,7 +46,7 @@ while True:
 
     # interlock
     # if module temperature above threshold, turn off module
-    if temp > 40:
+    if temp > 40 and Voltage != 0:
         PS.write("VOLT:LEV 0, (@1)")
 
     client.write_points(upload(temp, Voltage, Current))
