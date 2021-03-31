@@ -12,6 +12,7 @@ This package is used for OSU teststand monitering and software level interlock s
 
 ## Equipments
 - [Keysight DAQ970](https://www.keysight.com/us/en/assets/9018-04738/user-manuals/9018-04738.pdf?success=true)
+- Keysight E36233A
 
 ## Instructions
 
