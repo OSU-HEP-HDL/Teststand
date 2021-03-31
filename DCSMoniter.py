@@ -38,10 +38,16 @@ except visa.Error as ex:
 while True:
     DAQ.write("MEAS:TEMP? (@101)")
     temp = float(DAQ.read())
-    PS.write("MEAS:VOLT?")
+    PS.write("MEAS:VOLT? (@1)")
     Voltage = float(PS.read())
-    PS.write("MEAS:CURR?")
+    PS.write("MEAS:CURR? (@1)")
     Current = float(PS.read())
     print(temp, Voltage, Current)
+
+    # interlock
+    # if module temperature above threshold, turn off module
+    if temp > 40:
+        PS.write("VOLT:LEV 0, (@1)")
+
     client.write_points(upload(temp, Voltage, Current))
     time.sleep(3)
