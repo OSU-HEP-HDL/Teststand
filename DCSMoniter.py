@@ -28,11 +28,11 @@ PS_visa = 'TCPIP::K-E36233A-09066.dhcp.okstate.edu::inst0::INSTR'
 rm = visa.ResourceManager()
 try:
     DAQ = rm.open_resource(DAQ_visa)
-except vasa.Error as ex:
+except visa.Error as ex:
     print("couldn't connect to DAQ. Please make sure your devide is on and the visa address is correct")
 try:
     PS = rm.open_resource(PS_visa)
-except vasa.Error as ex:
+except visa.Error as ex:
     print("couldn't connect to Power Supply. Please make sure your devide is on and the visa address is correct")
 
 while True:
