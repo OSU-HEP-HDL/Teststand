@@ -54,6 +54,7 @@ if __name__ == '__main__':
     client.switch_database('dcsDB')
     while True:
         temp, rh = readiServer(host)
+        print('temperature: {} F, humidity = {} % RH '.format(temp, rh))
         client.write_points(uploaddata(temp, rh))
         time.sleep(3)
 
