@@ -22,11 +22,10 @@ def readiServer(hostname):
     temp = connectiServer(hostname, 1000, "*SRTF\r")
     try:
         temp = float(re.findall(r'[-+]?\d*\.\d+', temp.decode('utf-8'))[0])
-        print(temp)
     except IndexError:
         print('No temperature value found.')
 
-    rh = connectiServer(hostname, 1000, "*SRH\r")
+    rh = connectiServer(hostname, 1000, "*SRH2\r")
     try:
         rh = float(re.findall(r'[-+]?\d*\.\d+', rh.decode('utf-8'))[0])
     except IndexError:
