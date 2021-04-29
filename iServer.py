@@ -1,7 +1,9 @@
 import socket
 import sys
-from time import time, sleep
+import time
+import datetime
 import re
+from influxdb import InfluxDBClient
 
 host = '10.206.68.18'
 # iServer ip address
@@ -19,19 +21,39 @@ def connectiServer(hostname, port, content):
 
 def readiServer(hostname):
     ''' read temperature/RH value from iServer  '''
+
     temp = connectiServer(hostname, 1000, "*SRTF\r")
-    try:
-        temp = float(re.findall(r'[-+]?\d*\.\d+', temp.decode('utf-8'))[0])
-    except IndexError:
-        print('No temperature value found.')
+    while temp.decode('utf-8') is '':
+        temp = connectiServer(hostname, 1000, "*SRTF\r")
+    temp = float(re.findall(r'[-+]?\d*\.\d+', temp.decode('utf-8'))[0])
 
     rh = connectiServer(hostname, 1000, "*SRH2\r")
-    try:
-        rh = float(re.findall(r'[-+]?\d*\.\d+', rh.decode('utf-8'))[0])
-    except IndexError:
-        print('No humidity value found.')
-    sleep(2)
+    while rh.decode('utf-8') is '':
+        rh = connectiServer(hostname, 1000, "*SRH2\r")
+    rh = float(re.findall(r'[-+]?\d*\.\d+', rh.decode('utf-8'))[0])
+
     return temp, rh
 
+def uploaddata(temperature, humidity):
+    """influxdb info format"""
+    data_list = [{
+        'measurement': 'teststand',
+        'tags': {'cpu': 'aspen'},
+        'fields':{
+            'time': datetime.datetime.now().strftime("%H:%M:%S"),
+            'iServer_temperature': temperature,
+            'iServer_rh': humidity
+            }
+        }]
+
+    return data_list
+
+
 if __name__ == '__main__':
+    client = InfluxDBClient(host='localhost', port=8086)
+    client.switch_database('dcsDB')
+    while True:
         temp, rh = readiServer(host)
+        client.write_points(uploaddata(temp, rh))
+        time.sleep(3)
+
