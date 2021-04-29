@@ -3,8 +3,10 @@ import sys
 from time import time, sleep
 
 host = '10.206.68.18'
+# iServer ip address
 
 def connectiServer(hostname, port, content):
+    ''' connect to iServer and access temperature/RH'''
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((hostname, port))
     s.sendall(content)
@@ -16,6 +18,7 @@ def connectiServer(hostname, port, content):
     
 
 def readiServer(hostname):
+    ''' read temperature/RH value from iServer  '''
     temp = connectiServer(hostname, 1000, "*SRTF\r")
     temp = temp[1:-1]
     rh = connectiServer(hostname, 1000, "*SRH\r")
