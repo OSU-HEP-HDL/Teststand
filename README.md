@@ -12,6 +12,7 @@ This package is used for OSU teststand monitering and software level interlock s
 
 ## Equipments
 - [Keysight DAQ970](https://www.keysight.com/us/en/assets/9018-04738/user-manuals/9018-04738.pdf?success=true)
+- [omega ITHX-SD-Series](https://www.omega.com/en-us/data-acquisition/data-loggers/ethernet-and-wireless-data-logging/p/ITHX-SD-Series)
 
 ## Instructions
 
@@ -62,6 +63,27 @@ Install and start Grafana
 ```
 sudo yum install -y grafana
 sudo systemctl start grafana-server
+```
+
+### setup before each time running
+Make sure grafana and influxdb started everytime before running script.  
+influxd should be running too.  
+For `aspensys` please switch to `root` user for sudo permission.  
+```
+sudo systemctl start grafana-server
+sudo systemctl start influxdb
+influxd
+
+```
+
+### Running
+Moniter DCS data using grafana:  
+```
+python3 DCSMoniter.py
+```
+Access iServer data and upload/moniter using grafana:
+```
+python3 iServer
 ```
 
 ## References
