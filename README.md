@@ -77,6 +77,12 @@ influxd
 
 ```
 
+### Setup Arduino
+Change to root user, the go to `/home/aspensys/OSU_quad_test/Arduino/arduino-1.8.12`, then open Arduino GUI by running `arduino`.  
+Load script `PS_interlock.ino` then compile.  
+While Arduino Analog pin set to 5V (1023 in code), it will shut down the PS. Set to 0, the PS will be on.  
+For more detailed on how to turn on inhibit mode, please check [Keysight ES36233A manual](https://www.keysight.com/us/en/assets/9018-14156/service-manuals/9018-14156.pdf?success=true)
+
 ### Running
 Moniter DCS data using grafana:  
 ```
