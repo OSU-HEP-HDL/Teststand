@@ -3,6 +3,7 @@ from influxdb import InfluxDBClient
 import datetime
 import time
 import sys
+import serial
 
 def upload(temp, voltage, current):
     """influxdb info format"""
@@ -36,8 +37,12 @@ except visa.Error as ex:
     print("couldn't connect to Power Supply. Please make sure your devide is on and the visa address is correct")
 
 while True:
-    DAQ.write("MEAS:TEMP? (@101)")
-    temp = float(DAQ.read())
+    #DAQ.write("MEAS:TEMP? (@101)")
+    #temp = float(DAQ.read())
+    # get module temperature from Arduino readout
+    ser = serial.Serial('/dev/ttyACM0', 9600)
+    b = ser.readline()
+    string_n = b.decode()
     PS.write("MEAS:VOLT? (@1)")
     Voltage = float(PS.read())
     PS.write("MEAS:CURR? (@1)")
