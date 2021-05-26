@@ -12,7 +12,7 @@ def upload(temp, voltage, current):
         'tags': {'cpu': 'aspen'},
         'fields':{
             'time': datetime.datetime.now().strftime("%H:%M:%S"),
-            'temperature': temp,
+            'ModuleTemperature': temp,
             'voltage': voltage,
             'current': current
             }
@@ -27,10 +27,10 @@ DAQ_visa = 'TCPIP::k-daq970a-01258.dhcp.okstate.edu::inst0::INSTR'
 PS_visa = 'TCPIP::K-E36233A-09066.dhcp.okstate.edu::inst0::INSTR'
 
 rm = visa.ResourceManager()
-try:
-    DAQ = rm.open_resource(DAQ_visa)
-except visa.Error as ex:
-    print("couldn't connect to DAQ. Please make sure your devide is on and the visa address is correct")
+#try:
+#    DAQ = rm.open_resource(DAQ_visa)
+#except visa.Error as ex:
+#    print("couldn't connect to DAQ. Please make sure your devide is on and the visa address is correct")
 try:
     PS = rm.open_resource(PS_visa)
 except visa.Error as ex:
@@ -42,7 +42,8 @@ while True:
     # get module temperature from Arduino readout
     ser = serial.Serial('/dev/ttyACM0', 9600)
     b = ser.readline()
-    string_n = b.decode()
+    string = b.decode()
+    temp = float(string.split()[0])
     PS.write("MEAS:VOLT? (@1)")
     Voltage = float(PS.read())
     PS.write("MEAS:CURR? (@1)")
