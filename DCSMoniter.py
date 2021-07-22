@@ -46,7 +46,10 @@ while True:
     b = ser.readline()
     string_n = b.decode()
     string = string_n.rstrip()
-    temp, airTemp, airHumid = string.split()
+    try:
+        temp, airTemp, airHumid = string.split()
+    except ValueError:
+        print("Ooooops! Arduino is doing something stupid! Try again...")
     PS.write("MEAS:VOLT? (@1)")
     Voltage = float(PS.read())
     PS.write("MEAS:CURR? (@1)")
