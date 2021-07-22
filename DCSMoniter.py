@@ -5,7 +5,7 @@ import time
 import sys
 import serial
 
-def upload(temp, voltage, current):
+def upload(temp, airTemp, airHumid, voltage, current):
     """influxdb info format"""
     data_list = [{
         'measurement': 'teststand',
@@ -13,6 +13,8 @@ def upload(temp, voltage, current):
         'fields':{
             'time': datetime.datetime.now().strftime("%H:%M:%S"),
             'ModuleTemperature': temp,
+            'AirTemperature': airTemp,
+            'AirHumidity': airHumid,
             'voltage': voltage,
             'current': current
             }
@@ -42,18 +44,19 @@ while True:
     # get module temperature from Arduino readout
     ser = serial.Serial('/dev/ttyACM0', 9600)
     b = ser.readline()
-    string = b.decode()
-    temp = float(string.split()[0])
+    string_n = b.decode()
+    string = string_n.rstrip()
+    temp, airTemp, airHumid = string.split()
     PS.write("MEAS:VOLT? (@1)")
     Voltage = float(PS.read())
     PS.write("MEAS:CURR? (@1)")
     Current = float(PS.read())
-    print(temp, Voltage, Current)
+    print(temp, airTemp, airHumid, Voltage, Current)
 
     # interlock
     # if module temperature above threshold, turn off module
-    if temp > 40 and Voltage != 0:
+    if float(temp) > 40 and Voltage != 0:
         PS.write("VOLT:LEV 0, (@1)")
 
-    client.write_points(upload(temp, Voltage, Current))
+    client.write_points(upload(float(temp), float(airTemp), float(airHumid), Voltage, Current))
     time.sleep(3)

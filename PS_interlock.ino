@@ -1,5 +1,8 @@
+#include <Arduino.h>
 #include <Wire.h>
+#include "Adafruit_SHT31.h"
 
+// To get module temperature
 float Vin = 5.;
 float T[0];
 float V1;
@@ -16,24 +19,43 @@ float gettemp(){
   return T[0];
 }
 
+// To get air temperature and humidity
+bool enableHeater = false;
+uint8_t loopCnt = 0;
+
+Adafruit_SHT31 sht31 = Adafruit_SHT31();
+
+// setup
 void setup() {
   Wire.begin();
   Serial.begin(9600);
-  delay(1000);
+  
+  while (!Serial)
+    delay(10);     // will pause Zero, Leonardo, etc until serial console opens
+
+  if (! sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+    while (1) delay(1);
+  }
+    
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  float moduleTemp;
-  moduleTemp = gettemp();
+  float t = sht31.readTemperature();
+  float h = sht31.readHumidity();
+
+  float moduleTemp = gettemp();
+
   Serial.print(moduleTemp);
+  Serial.print("\t");
+  Serial.print(t);
+  Serial.print("\t");
+  Serial.print(h);
   Serial.print("\n");
-  delay(1000);
-  if(moduleTemp > 30){
+  if(moduleTemp>30){
     analogWrite(A4, 1023);
   }
   else{
     analogWrite(A4,0);
   }
-  
+  delay(1000);
 }
