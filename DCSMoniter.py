@@ -36,7 +36,7 @@ rm = visa.ResourceManager()
 try:
     PS = rm.open_resource(PS_visa)
 except visa.Error as ex:
-    print("couldn't connect to Power Supply. Please make sure your devide is on and the visa address is correct")
+    print("ERROR: Couldn't connect to Power Supply. Please make sure your devide is on and the visa address is correct")
 
 while True:
     #DAQ.write("MEAS:TEMP? (@101)")
@@ -52,7 +52,7 @@ while True:
     try:
         temp, airTemp, airHumid = string.split()
     except ValueError:
-        print("Ooooops! Arduino is doing something stupid! Try again...")
+        print("Ooooops! Arduino is doing something stupid! Trying again...")
     PS.write("MEAS:VOLT? (@1)")
     Voltage = float(PS.read())
     PS.write("MEAS:CURR? (@1)")
@@ -65,4 +65,4 @@ while True:
         PS.write("VOLT:LEV 0, (@1)")
 
     client.write_points(upload(float(temp), float(airTemp), float(airHumid), Voltage, Current))
-    time.sleep(3)
+    time.sleep(5)
