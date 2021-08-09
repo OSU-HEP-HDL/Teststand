@@ -43,7 +43,10 @@ while True:
     #temp = float(DAQ.read())
     # get module temperature from Arduino readout
     ser = serial.Serial('/dev/ttyACM0', 9600)
-    b = ser.readline()
+    try:
+        b = ser.readline()
+    except serial.serialutil.SerialException:
+        print("WARNING: no value in the serial buffer, trying again...") 
     string_n = b.decode()
     string = string_n.rstrip()
     try:
