@@ -5,7 +5,7 @@ import datetime
 import re
 from influxdb import InfluxDBClient
 
-host = '10.206.68.18'
+host = '10.206.70.13'
 # iServer ip address
 
 def connectiServer(hostname, port, content):
@@ -24,11 +24,13 @@ def readiServer(hostname):
 
     temp = connectiServer(hostname, 1000, "*SRTF\r")
     while temp.decode('utf-8') is '':
+        print("Couldn't get temperature. Re-trying.")
         temp = connectiServer(hostname, 1000, "*SRTF\r")
     temp = float(re.findall(r'[-+]?\d*\.\d+', temp.decode('utf-8'))[0])
 
     rh = connectiServer(hostname, 1000, "*SRH2\r")
     while rh.decode('utf-8') is '':
+        print("Couldn't get humidity. Re-trying.")
         rh = connectiServer(hostname, 1000, "*SRH2\r")
     rh = float(re.findall(r'[-+]?\d*\.\d+', rh.decode('utf-8'))[0])
 

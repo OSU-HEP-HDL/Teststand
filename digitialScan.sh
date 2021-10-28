@@ -1,0 +1,1 @@
+../YARR/Yarr/bin/scanConsole -r ../YARR/Yarr/configs/controller/specCfg-rd53a-4x3.json -c configs/digitial_modules/module_2/module_2_setup.json -s ../YARR/Yarr/configs/scans/rd53a/std_digitalscan.json -p

@@ -1,0 +1,33 @@
+{
+    "chipType" : "RD53A",
+    "chips" : [
+        {
+            "config" : "configs/digital_modules/module_2/tuned_640/chip1.json",
+            "tx" : 0,
+            "rx" : 0,
+            "enable" : 1,
+            "locked" : 0
+        },
+        {
+            "config" : "configs/digital_modules/module_2/tuned_640/chip2.json",
+            "tx" : 0,
+            "rx" : 1,
+            "enable" : 0,
+            "locked" : 0
+        },
+        {
+            "config" : "configs/digital_modules/module_2/tuned_640/chip3.json",
+            "tx" : 0,
+            "rx" : 2,
+            "enable" : 0,
+            "locked" : 0
+        },
+        {
+            "config" : "configs/digital_modules/module_2/tuned_640/chip4.json",
+            "tx" : 0,
+            "rx" : 3,
+            "enable" : 0,
+            "locked" : 0
+        }
+    ]
+}

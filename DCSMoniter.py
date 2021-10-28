@@ -65,4 +65,4 @@ while True:
         PS.write("VOLT:LEV 0, (@1)")
 
     client.write_points(upload(float(temp), float(airTemp), float(airHumid), Voltage, Current))
-    time.sleep(5)
+    time.sleep(3)

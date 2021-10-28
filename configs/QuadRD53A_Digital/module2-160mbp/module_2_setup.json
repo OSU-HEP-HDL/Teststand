@@ -1,0 +1,33 @@
+{
+    "chipType" : "RD53A",
+    "chips" : [
+        {
+            "config" : "configs/QuadRD53A_Digital/module2-160mbp/chip1.json",
+            "tx" : 0,
+            "rx" : 0,
+            "enable" : 1,
+            "locked" : 0
+        },
+        {
+            "config" : "configs/QuadRD53A_Digital/module2-160mbp/chip2.json",
+            "tx" : 0,
+            "rx" : 1,
+            "enable" : 1,
+            "locked" : 0
+        },
+        {
+            "config" : "configs/QuadRD53A_Digital/module2-160mbp/chip3.json",
+            "tx" : 0,
+            "rx" : 2,
+            "enable" : 1,
+            "locked" : 0
+        },
+        {
+            "config" : "configs/QuadRD53A_Digital/module2-160mbp/chip4.json",
+            "tx" : 0,
+            "rx" : 3,
+            "enable" : 1,
+            "locked" : 0
+        }
+    ]
+}
